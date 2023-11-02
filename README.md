@@ -1,6 +1,6 @@
 # Lofy-Clean_3.0v
 
-# Clean Messages Discord
+### Clean Messages Discord
 
 ![](/temp/preview.png)
 
