@@ -21,9 +21,14 @@
 
 4. How to use
    - `Put your token in lofy.json`
-- ```{
+
+```ts
+lofy.json = [
   "token": "",
   "Emoji": "👑"
+];
+```
+
 
 
 
