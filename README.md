@@ -3,7 +3,7 @@
 ![](/temp/preview.png)
 
 ### Prerequisites
-- Node JS [(https://nodejs.org/en)](https://nodejs.org/en/download](https://nodejs.org/en/download))
+- Node JS [(https://nodejs.org/en)](https://nodejs.org/en/download)
 
 
 # Lofy Clean 3.0v Discord
