@@ -47,7 +47,7 @@ Contribuições são bem-vindas! Se você tiver alguma ideia de melhoria ou enco
 
 ## Licença
 
-Este projeto está licenciado sob a [MIT License](LICENSE).
+Este projeto está licenciado sob a [MIT License](https://github.com/dougkalash/Lofy-Clean_3.0v/blob/main/LICENSE.txt). 
 
 
 
