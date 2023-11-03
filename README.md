@@ -1,30 +1,14 @@
 # Lofy-Clean_3.0v
 
-### Clean Messages Discord
-
 ![](/temp/preview.png)
-
-## Installation and Setup
 
 ### Prerequisites
 - Node JS [(https://nodejs.org/en)](https://nodejs.org/en/download](https://nodejs.org/en/download))
 
-1. Clone the Repository
-   - `git clone <Repo name>`
 
-2. Change into Project Directory
-   - `cd Lofy-Clean_3.0v`
+# Lofy Clean 3.0v Discord
 
-3. Install Dependencies
-   - `start [1] Install`
-   - `start [2] Start`
-
-4. How to use
-   - `Put your token in lofy.json`
-
-# LofyClean Discord Bot
-
-O LofyClean é um bot para Discord que permite limpar todas as mensagens de um determinado usuário em um canal quando uma reação personalizada é detectada. Ele usa a API HTTP do Discord para recuperar e excluir as mensagens automaticamente.
+O Lofy Clean é um script (self bot) para Discord que permite limpar todas as mensagens de um determinado usuário em um canal quando uma reação personalizada é detectada. Ele usa a API HTTP do Discord para recuperar e excluir as mensagens automaticamente.
 
 ## Funcionalidades
 
