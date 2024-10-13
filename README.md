@@ -1,4 +1,4 @@
-# Lofy-Clean_3.0v
+# Lofy-Clean_4.0v
 
 ![](/temp/preview.png)
 
@@ -6,7 +6,7 @@
 - Node JS [(https://nodejs.org/en)](https://nodejs.org/en/download)
 
 
-# Lofy Clean 3.0v Discord
+# Lofy Clean 4.0v
 
 Lofy Clean is a Discord script (self-bot) that allows you to clean all messages from a specific user in a channel when a custom reaction is detected. It uses the Discord HTTP API to retrieve and delete messages automatically.
 
@@ -47,9 +47,9 @@ Contributions are welcome! If you have any improvement ideas or encounter any is
 
 ## License
 
-This project is licensed under the [MIT License](https://github.com/dougkalash/Lofy-Clean_3.0v/blob/main/LICENSE.txt).
+This project is licensed under the [MIT License](https://github.com/dougkalash/Lofy-Clean_4.0v/blob/main/LICENSE.txt).
 
-# Lofy-Clean_3.0v (em Português)
+# Lofy-Clean_4.0v (em Português)
 
 ![](/temp/preview.png)
 
@@ -57,7 +57,7 @@ This project is licensed under the [MIT License](https://github.com/dougkalash/L
 - Node JS [(https://nodejs.org/en)](https://nodejs.org/en/download)
 
 
-# Lofy Clean 3.0v Discord
+# Lofy Clean 4.0v Discord
 
 O Lofy Clean é um script (self-bot) para o Discord que permite limpar todas as mensagens de um usuário específico em um canal quando uma reação personalizada é detectada. Ele utiliza a API HTTP do Discord para recuperar e excluir as mensagens automaticamente.
 
@@ -98,4 +98,4 @@ Contribuições são bem-vindas! Se você tiver alguma ideia de melhoria ou enco
 
 ## Licença
 
-Este projeto está licenciado sob a [Licença MIT](https://github.com/dougkalash/Lofy-Clean_3.0v/blob/main/LICENSE.txt).
+Este projeto está licenciado sob a [Licença MIT](https://github.com/befoulers/Lofy-Clean_4.0v/blob/main/LICENSE.txt).
