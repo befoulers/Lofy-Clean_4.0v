@@ -47,7 +47,7 @@ Contributions are welcome! If you have any improvement ideas or encounter any is
 
 ## License
 
-This project is licensed under the [MIT License](https://github.com/dougkalash/Lofy-Clean_4.0v/blob/main/LICENSE.txt).
+This project is licensed under the [MIT License](https://github.com/befoulers/Lofy-Clean_4.0v/blob/main/LICENSE.txt).
 
 # Lofy-Clean_4.0v (em Português)
 
@@ -98,4 +98,4 @@ Contribuições são bem-vindas! Se você tiver alguma ideia de melhoria ou enco
 
 ## Licença
 
-Este projeto está licenciado sob a [Licença MIT](https://github.com/dougkalash/Lofy-Clean_4.0v/blob/main/LICENSE.txt).
+Este projeto está licenciado sob a [Licença MIT](https://github.com/befoulers/Lofy-Clean_4.0v/blob/main/LICENSE.txt).
