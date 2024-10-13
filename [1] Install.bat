@@ -1,42 +1,33 @@
 @echo off
+chcp 65001 > nul
 color A
 title Lofy Clean
 echo.
-echo.
-echo.
-echo.
 echo                   ----------------------------------------------------
-echo                     Bem vindo ao instalador do Lofy Clean         
-echo                     Voce esta prestes a instalar todos os requisitos  
-echo                     Em caso de duvida entre no grupo do discord 
+echo                     Bem-vindo ao instalador do Lofy Clean       
+echo                     Você está prestes a instalar todos os requisitos 
 echo                   ----------------------------------------------------
-echo.
-echo.
-echo.
-echo.
-echo.
 echo.
 echo.
 pause nul
 cls
 color B
-cls
-call npm i colors discord.js-selfbot-v11 request small-sm glob@7 node-fetch@2 fs child_process@1.0.2 sync-fetch@0.4.1
+
+:: Instala os pacotes necessários usando npm
+call npm install colors discord.js-selfbot-v11 axios
+if %errorlevel% neq 0 (
+    echo.
+    echo Erro ao instalar os pacotes. Verifique se o Node.js está instalado corretamente.
+    pause
+    exit /b
+)
+
 cls
 color C
 echo.
-echo.
-echo.
-echo.
 echo                   ----------------------------------------------------
-echo                     Prontinho agora voce pode fechar o arquivo.
+echo                     Prontinho! Agora você pode fechar o arquivo.
 echo                   ----------------------------------------------------
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
 echo.
 pause nul
 exit

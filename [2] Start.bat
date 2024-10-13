@@ -1,4 +1,5 @@
 @echo off
-title Lofy Clean
+chcp 65001 > nul
+color A
 node .
 pause nul

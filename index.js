@@ -1,54 +1,59 @@
 const { Client } = require("discord.js-selfbot-v11");
 const client = new Client();
-const request = require("request");
+const axios = require("axios");
 const colors = require("colors");
 
 const { token, Emoji } = require("./lofy.json");
-process.on("unhandledRejection", (e) => {});
-process.on("uncaughtException", (e) => {});
-process.on("uncaughtRejection", (e) => {});
+process.on("unhandledRejection", (e) => console.error(e));
+process.on("uncaughtException", (e) => console.error(e));
+process.on("uncaughtRejection", (e) => console.error(e));
 process.warn = () => {};
 
-client.on("error", () => {});
-client.on("warn", () => {});
+client.on("error", (e) => console.error(e));
+client.on("warn", (e) => console.warn(e));
 
 function printClear() {
   console.log(
-    `
-
+    `\x1b[37m
      ██╗      ██████╗ ███████╗██╗   ██╗     ██████╗██╗     ███████╗ █████╗ ███╗   ██╗
      ██║     ██╔═══██╗██╔════╝╚██╗ ██╔╝    ██╔════╝██║     ██╔════╝██╔══██╗████╗  ██║
      ██║     ██║   ██║█████╗   ╚████╔╝     ██║     ██║     █████╗  ███████║██╔██╗ ██║
      ██║     ██║   ██║██╔══╝    ╚██╔╝      ██║     ██║     ██╔══╝  ██╔══██║██║╚██╗██║
      ███████╗╚██████╔╝██║        ██║       ╚██████╗███████╗███████╗██║  ██║██║ ╚████║
      ╚══════╝ ╚═════╝ ╚═╝        ╚═╝        ╚═════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝
-                                                                                
+                                                                                 
      • ${client.user.tag} | reaja com: '${Emoji}' em qualquer chat. •
-    `.white
+    `
   );
 }
 
-console.clear();
-process.title = `
-Verificando token
-`;
-console.log(
-  `
+(async () => {
+  try {
+    console.clear();
+    process.title = `Verificando token`;
+    console.log(
+      `\x1b[37m
+      ███      ▄██████▄     ▄█   ▄█▄    ▄████████ ███▄▄▄▄   
+      ▀█████████▄ ███    ███   ███ ▄███▀   ███    ███ ███▀▀▀██▄ 
+         ▀███▀▀██ ███    ███   ███▐██▀     ███    █▀  ███   ███ 
+          ███   ▀ ███    ███  ▄█████▀     ▄███▄▄▄     ███   ███ 
+          ███     ███    ███ ▀▀█████▄    ▀▀███▀▀▀     ███   ███ 
+          ███     ███    ███   ███▐██▄     ███    █▄  ███   ███ 
+          ███     ███    ███   ███ ▀███▄   ███    ███ ███   ███ 
+         ▄████▀    ▀██████▀    ███   ▀█▀   ██████████  ▀█   █▀  
+                             ▀                                 
+      `
+    );
 
-
-  ███      ▄██████▄     ▄█   ▄█▄    ▄████████ ███▄▄▄▄   
-  ▀█████████▄ ███    ███   ███ ▄███▀   ███    ███ ███▀▀▀██▄ 
-     ▀███▀▀██ ███    ███   ███▐██▀     ███    █▀  ███   ███ 
-      ███   ▀ ███    ███  ▄█████▀     ▄███▄▄▄     ███   ███ 
-      ███     ███    ███ ▀▀█████▄    ▀▀███▀▀▀     ███   ███ 
-      ███     ███    ███   ███▐██▄     ███    █▄  ███   ███ 
-      ███     ███    ███   ███ ▀███▄   ███    ███ ███   ███ 
-     ▄████▀    ▀██████▀    ███   ▀█▀   ██████████  ▀█   █▀  
-                           ▀                                
-  
-                                                                                                                                
-`.cyan
-);
+    await client.login(token);
+    console.clear();
+    process.title = `LofyClean | Conectado na conta: ${client.user.username}`;
+    printClear();
+  } catch (err) {
+    console.error(`Erro ao logar: ${err.message}`.red);
+    process.exit(1);
+  }
+})();
 
 function clear(authToken, authorId, channelId) {
   const wait = async (ms) => new Promise((done) => setTimeout(done, ms));
@@ -57,142 +62,114 @@ function clear(authToken, authorId, channelId) {
     Authorization: authToken,
   };
 
-  let messageDeletedCount = 0; // Variável para contagem de mensagens deletadas
+  let messageDeletedCount = 0;
+  let baseWaitTime = 3500; // Tempo base
+  let currentWaitTime = baseWaitTime;
 
-  const recurse = (before) => {
+  const recurse = async (before) => {
     let params = before ? `?before=${before}` : ``;
 
-    request(
-      {
-        url: `https://discord.com/api/v9/channels/${channelId}/messages${params}`,
-        headers: headers,
-        json: true,
-      },
-      async (error, response, result) => {
-        if (response === undefined) {
-          return recurse(before);
-        }
+    try {
+      const response = await axios.get(`https://discord.com/api/v9/channels/${channelId}/messages${params}`, { headers });
 
-        if (response.statusCode === 202) {
-          const w = response.retry_after;
+      if (response.status === 202) {
+        const w = response.data.retry_after;
+        console.log(
+          ` ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`.white,
+          `➔  Ops, canal não indexado, aguarde ${w} ms para indexar as mensagens.`.red
+        );
+        await wait(w);
+        return recurse(before);
+      }
 
-          console.log(
-            ` ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`.white, `➔  Ops, canal não indexado, aguarde ${w} ms para indexar as mensagens.`
-              .red
-          );
+      if (response.status !== 200) {
+        return console.log(
+          `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`.white,
+          `➔  Aguardando API!`
+        );
+      }
 
-          await wait(w);
+      for (let message of response.data) {
+        if (message.author.id === authorId && message.type !== 3) {
+          await new Promise((resolve) => {
+            const deleteRecurse = async () => {
+              try {
+                const result = await axios.delete(`https://discord.com/api/v9/channels/${channelId}/messages/${message.id}`, { headers });
 
-          return recurse(before);
-        }
+                if (result.data.retry_after) {
+                  console.log(
+                    `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`.white,
+                    `➔  Rate-limited! Aguardando...`.red
+                  );
+                  currentWaitTime *= 2; // Dobrar o tempo de espera
+                  await wait(result.data.retry_after); // Espera o tempo definido pela API
+                  return deleteRecurse(); // Tenta deletar novamente
+                }
 
-        if (response.statusCode !== 200) {
-          return console.log(
-            `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`.white, `➔  Aguardando API!`
-              .red,
-            result
-          );
-        }
+                messageDeletedCount++;
 
-        for (let i in result) {
-          let message = result[i];
+                if (messageDeletedCount % 5 === 0) {
+                  console.log(
+                    `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`.white,
+                    `➔  Deletadas ${messageDeletedCount} mensagens. Aguardando ${currentWaitTime}ms...`
+                  );
+                  await wait(currentWaitTime);
+                }
 
-          if (message.author.id === authorId && message.type !== 3) {
-            await new Promise((resolve) => {
-              const deleteRecurse = () => {
-                request.delete(
-                  {
-                    url: `https://discord.com/api/v9/channels/${channelId}/messages/${message.id}`,
-                    headers: headers,
-                    json: true,
-                  },
-                  async (error, response, result) => {
-                    if (error) {
-                      return deleteRecurse();
-                    }
-                    if (result) {
-                      if (result.retry_after !== undefined) {
-                        console.log(
-                          `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`.white, `➔  Rate-limited! Espere ${
-                            result.retry_after
-                          } ms para continuar a limpeza.`.red
-                        );
-                        //console.log(result.retry_after);
-                        await wait(2600 * 8 + result.retry_after / 3000);
-                        return deleteRecurse();
-                      }
-                    }
+                if (messageDeletedCount % 25 === 0) {
+                  await wait(15000); // Aguardando um tempo fixo após 25 mensagens
+                }
 
-                    // Incrementa o contador de mensagens deletadas
-                    messageDeletedCount++;
+                resolve();
+              } catch (error) {
+                // Se a mensagem falhar ao deletar, aumente o tempo e tente novamente
+                if (error.response && error.response.status === 429) {
+                  console.log(
+                    `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`.white,
+                    `➔  Rate-limited! Aguardando...`.red
+                  );
+                  currentWaitTime *= 2; // Dobrar o tempo de espera
+                  await wait(10000); // Aguardar um tempo fixo antes de tentar novamente
+                  deleteRecurse(); // Tenta deletar novamente
+                } else {
+                  console.error(`Erro ao deletar mensagem: ${error.message}`.red);
+                  resolve();
+                }
+              }
+            };
 
-                    // Verifica se já foram deletadas 5 mensagens
-                    const moduloCinco = messageDeletedCount % 5;
-                    if (moduloCinco === 0) {
-                      console.log(
-                        `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`.white, `➔  Deletadas ${messageDeletedCount} mensagens. Aguardando 3500ms...`
-                          .green
-                      );
-                      await wait(3500); // Espera 3500ms antes de continuar a deleção
-                    }
-
-                    
-                    // Verifica se já foram deletadas 25 mensagens
-                    const moduloVinteECinco = messageDeletedCount % 25;
-                    //console.log({moduloVinteECinco, messageDeletedCount})
-                    if (moduloVinteECinco === 0) {
-                      /*
-                      console.log(
-                        `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()} ➔  Deletadas ${messageDeletedCount} mensagens. Aguardando 5seg...`
-                          .green
-                      );
-                      */
-                      await wait(15000); // Espera 15 segundos antes de continuar a deleção
-                    }
-
-                    resolve();
-                  }
-                );
-              };
-
-              deleteRecurse();
-            });
-          }
-        }
-
-        if (result.length === 0) {
-          console.clear();
-          printClear();
-
-          console.log(
-            `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`.white, `➔  Canal Limpo!`
-              .green,
-            `Total de mensagens deletadas: ${messageDeletedCount}`.green // Exibe o total de mensagens deletadas
-          );
-        } else {
-          recurse(result[result.length - 1].id);
+            deleteRecurse();
+          });
         }
       }
-    );
+
+      if (response.data.length === 0) {
+        console.clear();
+        printClear();
+        console.log(
+          `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`.white,
+          `➔  Canal Limpo!`,
+          `Total de mensagens deletadas: ${messageDeletedCount}`.green
+        );
+      } else {
+        recurse(response.data[response.data.length - 1].id);
+      }
+    } catch (error) {
+      console.error(`Erro ao buscar mensagens: ${error.message}`.red);
+    }
   };
 
   recurse();
 }
 
-client.on("ready", async () => {
-  console.clear();
-  process.title = `LofyClean | Conectado na conta: ${client.user.username}`;
-  printClear();
-});
-
 client.on("raw", async (packet) => {
   if (packet.t === "MESSAGE_REACTION_ADD") {
     if (packet.d.emoji.name == `${Emoji}`) {
       if (packet.d.user_id === client.user.id) {
-        clear(token, client.user.id, packet.d.channel_id); // Limpa o canal da mensagem
+        clear(token, client.user.id, packet.d.channel_id);
         console.log(
-          `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`.white, `➔  Gatilho Detectado - Iniciando o processo de limpeza....`
-            .green
+          `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`.white,
+          `➔  Gatilho Detectado - Iniciando o processo de limpeza....`.green
         );
       }
     }
